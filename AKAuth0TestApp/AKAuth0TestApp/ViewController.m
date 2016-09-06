@@ -8,19 +8,17 @@
 #import <Lock/Lock.h>
 
 //Please use your Auth0 APIv2 token from https://auth0.com/docs/api/management/v2/tokens
-static NSString *kAuth0APIv2Token = @"eyJhbGciOiJIUz...........";
+static NSString *kAuth0APIv2Token = @"Auth0APIv2Token";
 
 //Please use your application data from https://manage.auth0.com/#/account/advanced
 //section "Global Client Information"
-static NSString *kGlobalClientId = @"IuAb..........";
-static NSString *kGlobalClientSecret = @"WtwgI.........";
+static NSString *kGlobalClientId = @"GlobalClientId";
+static NSString *kGlobalClientSecret = @"GlobalClientSecret";
 
 //Please use your application data from https://auth0.com/docs/api/authentication
-static NSString *kAppClientId = @"pj1N9W644zMIyI62UZqNIFnYCdsnwt9V";
-static NSString *kAppClientSecret = @"Ioc...........";
-
-//Please use your Auth0 Domain
-static NSString *kAppRequestUrl = @"https://juliazhelem.eu.auth0.com";
+static NSString *kAuth0ClientId = @"Auth0ClientId";
+static NSString *kAuth0ClientSecret = @"Auth0ClientSecret";
+static NSString *kAuth0Domain = @"Auth0Domain";
 
 static NSString *kAuth0ConnectionType = @"Username-Password-Authentication";
 static NSString *kOpenURLProperty = @"openURL";
@@ -112,10 +110,11 @@ static NSString *kAccessToken = @"access_token";
 }
 
 - (void)fetchTokenWithCode:(NSString *)code callbackURL:(NSString *)redirectURL {
-    
+    NSString *clientId = [NSBundle mainBundle].infoDictionary[kAuth0ClientId];
+    NSString *clientSecret = [NSBundle mainBundle].infoDictionary[kAuth0ClientSecret];
     NSDictionary *headers = @{ @"content-type": @"application/json" };
-    NSDictionary *body = @{ @"client_id": kAppClientId,
-                            @"client_secret" : kAppClientSecret,
+    NSDictionary *body = @{ @"client_id": clientId,
+                            @"client_secret" : clientSecret,
                             @"grant_type" : @"authorization_code",
                             @"redirect_uri" : redirectURL,
                             @"code" : code
@@ -127,7 +126,8 @@ static NSString *kAccessToken = @"access_token";
                                                            options:0
                                                              error:&error];
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/oauth/token", kAppRequestUrl];
+    NSString *domain = [NSBundle mainBundle].infoDictionary[kAuth0Domain];
+    NSString *urlString = [NSString stringWithFormat:@"https://%@/oauth/token", domain];
     NSURL *url = [NSURL URLWithString:urlString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
                                                            cachePolicy:NSURLRequestUseProtocolCachePolicy
@@ -142,7 +142,7 @@ static NSString *kAccessToken = @"access_token";
                                                     if (error) {
                                                         NSLog(@"%@", error);
                                                     } else {
-                                                        NSString *url = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                                                        //NSString *url = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
                                                         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
                                                         
                                                         [self fetchUserProfileWithAccessToken:dict[kAccessToken]];
@@ -154,7 +154,8 @@ static NSString *kAccessToken = @"access_token";
 
 - (void)fetchUserProfileWithAccessToken:(NSString *)accessToken {
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/userinfo/?access_token=%@",kAppRequestUrl, accessToken];
+    NSString *domain = [NSBundle mainBundle].infoDictionary[kAuth0Domain];
+    NSString *urlString = [NSString stringWithFormat:@"https://%@/userinfo/?access_token=%@",domain, accessToken];
     NSURL *url = [NSURL URLWithString:urlString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
                                                            cachePolicy:NSURLRequestUseProtocolCachePolicy
@@ -177,10 +178,12 @@ static NSString *kAccessToken = @"access_token";
 }
 
 - (IBAction)clickGetUserList:(id)sender {
-    NSString *bearerToken = [NSString stringWithFormat:@"Bearer %@", kAuth0APIv2Token];
+    NSString *apiToken = [NSBundle mainBundle].infoDictionary[kAuth0APIv2Token];
+    NSString *bearerToken = [NSString stringWithFormat:@"Bearer %@", apiToken];
     NSDictionary *headers = @{ @"Authorization": bearerToken };
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/api/v2/users?include_totals=true&include_fields=true&search_engine=v2", kAppRequestUrl];
+    NSString *domain = [NSBundle mainBundle].infoDictionary[kAuth0Domain];
+    NSString *urlString = [NSString stringWithFormat:@"https://%@/api/v2/users?include_totals=true&include_fields=true&search_engine=v2", domain];
     NSURL *url = [NSURL URLWithString:urlString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
                                                            cachePolicy:NSURLRequestUseProtocolCachePolicy
@@ -209,21 +212,23 @@ static NSString *kAccessToken = @"access_token";
     self.userList = [NSMutableArray arrayWithArray:userList[@"users"]];
     [self.pickerData removeAllObjects];
     for (NSDictionary *user in self.userList) {
+        //A0UserProfile *userprofile = [[A0UserProfile alloc] initWithDictionary:user];
         [self.pickerData addObject:user[@"name"]];
     }
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.usersPickerView reloadAllComponents];
     });
-    
 }
 
 - (IBAction)clickImpersonateButton:(id)sender {
    
     //Getting bearer token
+    NSString *clientId = [NSBundle mainBundle].infoDictionary[kGlobalClientId];
+    NSString *clientSecret = [NSBundle mainBundle].infoDictionary[kGlobalClientSecret];
     NSDictionary *headers = @{ @"content-type": @"application/json" };
-    NSDictionary *body = @{ @"client_id": kGlobalClientId,
-                            @"client_secret" : kGlobalClientSecret,
+    NSDictionary *body = @{ @"client_id": clientId,
+                            @"client_secret" : clientSecret,
                             @"grant_type" : @"client_credentials"
                             };
     
@@ -233,7 +238,8 @@ static NSString *kAccessToken = @"access_token";
                                                            options:0
                                                              error:&error];
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/oauth/token", kAppRequestUrl];
+    NSString *domain = [NSBundle mainBundle].infoDictionary[kAuth0Domain];
+    NSString *urlString = [NSString stringWithFormat:@"https://%@/oauth/token", domain];
     NSURL *url = [NSURL URLWithString:urlString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
                                                            cachePolicy:NSURLRequestUseProtocolCachePolicy
@@ -263,10 +269,10 @@ static NSString *kAccessToken = @"access_token";
     NSString *token = [NSString stringWithFormat:@"Bearer %@", bearerToken];
     NSDictionary *headers = @{ @"content-type": @"application/json",
                                @"Authorization": token};
-    
+    NSString *clientId = [NSBundle mainBundle].infoDictionary[kAuth0ClientId];
     NSDictionary *body = @{ @"protocol": @"oauth2",
                             @"impersonator_id" : self.profile.userId,
-                            @"client_id" : kAppClientId,
+                            @"client_id" : clientId,
                             @"response_type" : @"code"
                             };
     
@@ -276,7 +282,8 @@ static NSString *kAccessToken = @"access_token";
                                                              error:&error];
     
     NSString *userId = [self.selectedUser stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet alphanumericCharacterSet]];
-    NSString *urlString = [NSString stringWithFormat:@"%@/users/%@/impersonate", kAppRequestUrl, userId];
+    NSString *domain = [NSBundle mainBundle].infoDictionary[kAuth0Domain];
+    NSString *urlString = [NSString stringWithFormat:@"https://%@/users/%@/impersonate", domain, userId];
     NSURL *url = [NSURL URLWithString:urlString];
 
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url

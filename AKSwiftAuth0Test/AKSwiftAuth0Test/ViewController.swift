@@ -2,31 +2,26 @@
 //  ViewController.swift
 //  AKSwiftAuth0Test
 //
-//  Created by Iuliia Zhelem on 26.07.16.
-//  Copyright © 2016 Akvelon. All rights reserved.
-//
 
 import UIKit
 import Lock
 
 //Please use your Auth0 APIv2 token from https://auth0.com/docs/api/management/v2/tokens
-let kAuth0APIv2Token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJJdUFiSnZvZXpwZTFFWUM2ZVhRRUoyd0QwSm5MOE5IZSIsInNjb3BlcyI6eyJ1c2VycyI6eyJhY3Rpb25zIjpbInJlYWQiXX19LCJpYXQiOjE0NjU5MTc3MTksImp0aSI6IjI1Y2VhOTk3OGVhZWU1MDkxM2U1ZjBlOTMyNTdhYmYwIn0.ekLGXprKgwx6pvA5wCUDlTNcv5SXr-Y0l-zT6ZtZvaI";
+let kAuth0APIv2Token = "Auth0APIv2Token"
 
 //Please use your application data from https://manage.auth0.com/#/account/advanced
 //section "Global Client Information"
-let kGlobalClientId = "IuAbJvoezpe1EYC6eXQEJ2wD0JnL8NHe";
-let kGlobalClientSecret = "WtwgICx_Glajoirum-QrWT1CXHR51jVymgLba-OTjhdzsL4vAC8PFQZ0cGVllmml";
+let kGlobalClientId = "GlobalClientId"
+let kGlobalClientSecret = "GlobalClientSecret"
 
 //Please use your application data from https://auth0.com/docs/api/authentication
-//let kAppClientId = "1T8XeajR2FhDBAAz7JQ22mmzqCMoqzud";
-let kAppClientSecret = "-1Q21J6aH3Q9Hwc6RewTJWMjwBKGYgZzxzqiaLR6RN4BxEZ_gwSS7JKSokMM6ob5";
+let kAuth0ClientSecret = "Auth0ClientSecret"
+let kAuth0ClientId = "Auth0ClientId"
+let kAuth0Domain = "Auth0Domain"
 
-//Please use your Auth0 Domain
-let kAppRequestUrl = "https://juliazhelem.eu.auth0.com";
-
-let kAuth0ConnectionType = "Username-Password-Authentication";
-let kOpenURLProperty = "openURL";
-let kAccessToken = "access_token";
+let kAuth0ConnectionType = "Username-Password-Authentication"
+let kOpenURLProperty = "openURL"
+let kAccessToken = "access_token"
 
 class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
 
@@ -93,16 +88,17 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
 
     func fetchTokenWithCode(code: String, callbackURL:String) {
         // POST request
-        // We need url "https://<Auth0 Domain>/users/oauth/token"
+        // We need url "https://<Auth0 Domain>/oauth/token"
         // and header "content-type": "application/json"
         
-        let userDomain = (NSBundle.mainBundle().infoDictionary!["Auth0Domain"]) as! String
-        let clientId = (NSBundle.mainBundle().infoDictionary!["Auth0ClientId"]) as! String
+        let userDomain = (NSBundle.mainBundle().infoDictionary![kAuth0Domain]) as! String
+        let clientId = (NSBundle.mainBundle().infoDictionary![kAuth0ClientId]) as! String
+        let clientSecrete = (NSBundle.mainBundle().infoDictionary![kAuth0ClientSecret]) as! String
 
         let headers = ["content-type": "application/json"]
         let parameters = [
             "client_id": clientId,
-            "client_secret": kAppClientSecret,
+            "client_secret": clientSecrete,
             "grant_type": "authorization_code",
             "redirect_uri": callbackURL,
             "code": code
@@ -211,13 +207,14 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
         // We need url "https://<Auth0 Domain>//api/v2/users?include_totals=true&include_fields=true&search_engine=v2"
         // and header "Authorization : Bearer <kAuth0APIv2Token>"
         
-        let userDomain = (NSBundle.mainBundle().infoDictionary!["Auth0Domain"]) as! String
+        let userDomain = (NSBundle.mainBundle().infoDictionary![kAuth0Domain]) as! String
         let urlString = "https://\(userDomain)/api/v2/users?include_totals=true&include_fields=true&search_engine=v2"
         let url = NSURL(string: urlString)
         if let actualUrl = url {
             let request = NSMutableURLRequest(URL: actualUrl)
             request.HTTPMethod = "GET";
-            request.allHTTPHeaderFields = ["Authorization" : "Bearer \(kAuth0APIv2Token)"]
+            let apiToken = (NSBundle.mainBundle().infoDictionary![kAuth0APIv2Token]) as! String
+            request.allHTTPHeaderFields = ["Authorization" : "Bearer \(apiToken)"]
             
             NSURLSession.sharedSession().dataTaskWithRequest(request, completionHandler: {(data : NSData?, response : NSURLResponse?, error : NSError?) in
                 
@@ -260,15 +257,17 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     }
     
     @IBAction func clickImpersonateButton(sender: AnyObject) {
-        //Getting bearer token
+        // Get bearer token
         // POST request
         // We need url "https://<Auth0 Domain>/oauth/token"
         // and header "content-type": "application/json"
         
         let headers = ["content-type": "application/json"]
+        let clientId = (NSBundle.mainBundle().infoDictionary![kGlobalClientId]) as! String
+        let clientSecrete = (NSBundle.mainBundle().infoDictionary![kGlobalClientSecret]) as! String
         let parameters = [
-            "client_id": kGlobalClientId,
-            "client_secret": kGlobalClientSecret,
+            "client_id": clientId,
+            "client_secret": clientSecrete,
             "grant_type": "client_credentials"
         ]
         
@@ -308,6 +307,10 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
     }
     
     func impersonateUserWithBearerToken(bearerToken:String?) {
+        // Impersonate user
+        // POST request
+        // We need url "https://<Auth0 Domain>/users/<Selected_User_id>/impersonate"
+        // and header "authorization": "Bearer <Bearer_Token>"
         if let actualToken = bearerToken {
             let headers = [
                 "content-type": "application/json",
@@ -316,7 +319,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
             let parameters = [
                 "protocol": "oauth2",
                 "impersonator_id": self.profile!.userId,
-                "client_id": ((NSBundle.mainBundle().infoDictionary!["Auth0ClientId"]) as! String),
+                "client_id": ((NSBundle.mainBundle().infoDictionary![kAuth0ClientId]) as! String),
                 "response_type": "code"
             ]
 
@@ -328,7 +331,7 @@ class ViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDele
                 return;
             }
             
-            let userDomain = (NSBundle.mainBundle().infoDictionary!["Auth0Domain"]) as! String
+            let userDomain = (NSBundle.mainBundle().infoDictionary![kAuth0Domain]) as! String
             let userId = self.selectedUser!.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.alphanumericCharacterSet());
 
             let request = NSMutableURLRequest(URL: NSURL(string: "https://\(userDomain)/users/\(userId!)/impersonate")!,

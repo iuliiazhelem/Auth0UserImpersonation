@@ -18,6 +18,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     A0Lock *lock = [A0Lock sharedLock];
     [lock applicationLaunchedWithOptions:launchOptions];
+    
+    //Add logging
     [A0LockLogger logAll];
 
     return YES;

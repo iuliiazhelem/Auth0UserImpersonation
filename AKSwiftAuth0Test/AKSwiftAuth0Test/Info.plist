@@ -2,10 +2,18 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>Auth0ClientId</key>
-    <string>1T8XeajR2FhDBAAz7JQ22mmzqCMoqzud</string>
-    <key>Auth0Domain</key>
-    <string>juliazhelem.eu.auth0.com</string>
+	<key>Auth0Domain</key>
+	<string>{DOMAIN}</string>
+	<key>Auth0ClientId</key>
+	<string>{CLIENT_ID}</string>
+	<key>Auth0ClientSecret</key>
+	<string>{CLIENT_SECRET}</string>
+	<key>Auth0APIv2Token</key>
+	<string>{API_V2_TOKEN}</string>
+	<key>GlobalClientId</key>
+	<string>{GLOBAL_CLIENT_ID}</string>
+	<key>GlobalClientSecret</key>
+	<string>{GLOBAL_CLIENT_SECRET}</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
@@ -16,19 +24,19 @@
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>$(PRODUCT_NAME)</string>
-    <key>CFBundleURLTypes</key>
-    <array>
-        <dict>
-            <key>CFBundleTypeRole</key>
-            <string>None</string>
-            <key>CFBundleURLName</key>
-            <string>auth0</string>
-            <key>CFBundleURLSchemes</key>
-            <array>
-                <string>a01T8XeajR2FhDBAAz7JQ22mmzqCMoqzud</string>
-            </array>
-        </dict>
-    </array>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>None</string>
+			<key>CFBundleURLName</key>
+			<string>auth0</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>a0{CLIENT_ID}</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>

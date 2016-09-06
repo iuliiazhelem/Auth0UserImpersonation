@@ -14,7 +14,6 @@ PODS:
   - AFNetworking/Serialization (3.1.0)
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
-  - Auth0 (1.0.0-beta.7)
   - CocoaLumberjack (2.3.0):
     - CocoaLumberjack/Default (= 2.3.0)
     - CocoaLumberjack/Extensions (= 2.3.0)
@@ -45,18 +44,16 @@ PODS:
   - SimpleKeychain (0.7.0)
 
 DEPENDENCIES:
-  - Auth0 (~> 1.0.0-beta.7)
   - Lock (~> 1.24)
   - SimpleKeychain
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
-  Auth0: 67d8310d4729c390b71db6567a1c18137153b8a7
   CocoaLumberjack: 97fab7ee5f507fe54445cca7ea80f926729cfd15
   Lock: d981a23c9ea7d2a77d7637ea83826b751df4e2f2
   Masonry: 281802d04d787ea2973179ee8bcb50500579ede2
   SimpleKeychain: b50cef3b87939d480ea1143425c00f5b4b70fe21
 
-PODFILE CHECKSUM: e9c9d5fdf1411c3ba6c90086a76d2347aae93a43
+PODFILE CHECKSUM: ffda1a4413490a054105790ea0561fa8ea56a3bb
 
 COCOAPODS: 1.0.1
