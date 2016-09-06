@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1149C68DED3E0B6495A0B269 /* libPods-AKAuth0TestApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C4894EAE60A0FE122638FBF /* libPods-AKAuth0TestApp.a */; };
 		22AF2B8B1D1044C000C97251 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 22AF2B8A1D1044C000C97251 /* main.m */; };
 		22AF2B8E1D1044C000C97251 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 22AF2B8D1D1044C000C97251 /* AppDelegate.m */; };
 		22AF2B911D1044C000C97251 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 22AF2B901D1044C000C97251 /* ViewController.m */; };
@@ -27,21 +26,7 @@
 		22AF2B951D1044C000C97251 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		22AF2B981D1044C000C97251 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		22AF2B9A1D1044C000C97251 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4C4894EAE60A0FE122638FBF /* libPods-AKAuth0TestApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AKAuth0TestApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		547931D8668DFE70ED9EDDDB /* Pods-AKAuth0TestApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AKAuth0TestApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AKAuth0TestApp/Pods-AKAuth0TestApp.debug.xcconfig"; sourceTree = "<group>"; };
-		693E9962D5A7B63E10753F5A /* Pods-AKAuth0TestApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AKAuth0TestApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-AKAuth0TestApp/Pods-AKAuth0TestApp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
-
-/* Begin PBXFrameworksBuildPhase section */
-		22AF2B831D1044C000C97251 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				1149C68DED3E0B6495A0B269 /* libPods-AKAuth0TestApp.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		22AF2B7D1D1044C000C97251 = {
@@ -49,8 +34,6 @@
 			children = (
 				22AF2B881D1044C000C97251 /* AKAuth0TestApp */,
 				22AF2B871D1044C000C97251 /* Products */,
-				5C9EFE9D98A56B6D360EB204 /* Pods */,
-				818EDD5D71C53914CD1FCF28 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -86,23 +69,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		5C9EFE9D98A56B6D360EB204 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				547931D8668DFE70ED9EDDDB /* Pods-AKAuth0TestApp.debug.xcconfig */,
-				693E9962D5A7B63E10753F5A /* Pods-AKAuth0TestApp.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
-		818EDD5D71C53914CD1FCF28 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				4C4894EAE60A0FE122638FBF /* libPods-AKAuth0TestApp.a */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -110,12 +76,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 22AF2B9D1D1044C000C97251 /* Build configuration list for PBXNativeTarget "AKAuth0TestApp" */;
 			buildPhases = (
-				2792497F54A71210FA09CF4F /* Check Pods Manifest.lock */,
 				22AF2B821D1044C000C97251 /* Sources */,
-				22AF2B831D1044C000C97251 /* Frameworks */,
 				22AF2B841D1044C000C97251 /* Resources */,
-				8F1AA946DF4ED4DA50385D48 /* Embed Pods Frameworks */,
-				04F2D3CC76D560259F61FFDA /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -170,54 +132,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		04F2D3CC76D560259F61FFDA /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AKAuth0TestApp/Pods-AKAuth0TestApp-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		2792497F54A71210FA09CF4F /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		8F1AA946DF4ED4DA50385D48 /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AKAuth0TestApp/Pods-AKAuth0TestApp-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		22AF2B821D1044C000C97251 /* Sources */ = {
@@ -336,24 +250,22 @@
 		};
 		22AF2B9E1D1044C000C97251 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 547931D8668DFE70ED9EDDDB /* Pods-AKAuth0TestApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = AKAuth0TestApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.akvelon.AKAuth0TestApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.auth0.AKAuth0TestApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
 		};
 		22AF2B9F1D1044C000C97251 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 693E9962D5A7B63E10753F5A /* Pods-AKAuth0TestApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = AKAuth0TestApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.akvelon.AKAuth0TestApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.auth0.AKAuth0TestApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
